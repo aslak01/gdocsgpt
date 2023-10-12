@@ -14,6 +14,7 @@
 <style>
   .submenu-wrapper {
     display: contents;
+    position: relative;
   }
   button {
     all: unset;
