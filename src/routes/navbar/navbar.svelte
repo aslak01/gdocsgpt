@@ -1,5 +1,7 @@
 <script lang="ts">
   import NavbarButton from "./navbarButton.svelte";
+  import NestedNavbar from "./nestedNavbar.svelte";
+  import NestedNavbarButton from "./nestedNavbarButton.svelte";
   const dummyButtons = [
     "Edit",
     "View",
@@ -14,11 +16,11 @@
 <nav>
   <ul>
     <NavbarButton title="File">
-      <ul class="submenu">
-        <li>New</li>
-        <li>Open</li>
-        <li>API Key</li>
-      </ul>
+      <NestedNavbar>
+        <NestedNavbarButton>New</NestedNavbarButton>
+        <NestedNavbarButton>Open</NestedNavbarButton>
+        <NestedNavbarButton>API Key</NestedNavbarButton>
+      </NestedNavbar>
     </NavbarButton>
     {#each dummyButtons as btn}
       <NavbarButton title={btn} />
@@ -40,29 +42,11 @@
     border-bottom: 1px solid var(--accent);
   }
 
-  .submenu {
-    display: none;
-  }
-  :global(.submenu-wrapper.active) .submenu {
-    display: block;
-    position: absolute;
-    top: var(--_nav-height);
-    left: 0;
-    width: var(--size-13);
-    background: var(--sheet);
-    padding-inline: var(--size-2);
-    padding-block: var(--size-1);
-    font-size: calc(var(--font-size-0) * 1.2);
-    box-shadow: var(--shadow-3);
-  }
   ul {
     padding: unset;
     display: flex;
     align-items: center;
     align-content: center;
     gap: var(--size-2);
-  }
-  li {
-    padding: unset;
   }
 </style>
