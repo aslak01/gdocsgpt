@@ -30,6 +30,9 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource-variable/jost": "^5.0.14",
+		"carbon-icons-svelte": "^12.3.0",
+		"carbon-pictograms-svelte": "^12.8.0",
+		"carbon-preprocess-svelte": "^0.10.0",
 		"z": "^1.0.9",
 		"zod-form-data": "^2.0.2"
 	}
