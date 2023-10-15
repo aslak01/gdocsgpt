@@ -12,13 +12,15 @@
   button {
     all: unset;
     box-sizing: border-box;
-    padding: var(--size-1);
-    padding-block: var(--size-2);
-    display: grid;
+    padding: var(--size-2);
+    padding-block: var(--size-1);
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   button:hover {
-    background: var(--stone-4);
+    background: var(--stone-3);
     cursor: pointer;
   }
 </style>

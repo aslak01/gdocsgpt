@@ -1,4 +1,7 @@
 <script lang="ts">
+  import CaretRight from "carbon-icons-svelte/lib/CaretRight.svelte";
+  import Contract from "carbon-pictograms-svelte/lib/Contract.svelte";
+
   import NavbarButton from "./navbarButton.svelte";
   import NestedNavbar from "./nestedNavbar.svelte";
   import NestedNavbarButton from "./nestedNavbarButton.svelte";
@@ -14,11 +17,17 @@
 </script>
 
 <nav>
+  <div class="iconwrapper">
+    <Contract />
+  </div>
   <ul>
     <NavbarButton title="File">
       <NestedNavbar>
         <NestedNavbarButton>New</NestedNavbarButton>
-        <NestedNavbarButton>Open</NestedNavbarButton>
+        <NestedNavbarButton
+          >Open
+          <CaretRight size={20} />
+        </NestedNavbarButton>
         <NestedNavbarButton>API Key</NestedNavbarButton>
       </NestedNavbar>
     </NavbarButton>
@@ -31,12 +40,12 @@
 <style>
   nav {
     background: var(--background);
-    display: grid;
+    display: flex;
     grid-auto-flow: column;
-    align-items: center;
-    align-content: center;
-    gap: var(--size-2);
+    align-items: start;
+    gap: var(--size-1);
     padding: var(--size-1);
+    align-content: center;
     height: var(--_nav-height);
     --_menu-font-size: var(--font-size-0);
     border-bottom: 1px solid var(--accent);
@@ -48,5 +57,13 @@
     align-items: center;
     align-content: center;
     gap: var(--size-2);
+  }
+  .iconwrapper {
+    height: var(--size-7);
+    width: var(--size-7);
+  }
+  .iconwrapper :global(svg) {
+    height: 100%;
+    width: 100%;
   }
 </style>
