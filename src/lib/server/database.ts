@@ -26,7 +26,7 @@ export function getConversation(userid: string, conversationid: string) {
   if (!user) {
     return;
   }
-  const conversation = user.findIndex((conversation: Conversation) =>
+  const conversation = user.find((conversation: Conversation) =>
     conversation.id === conversationid
   );
   return conversation;

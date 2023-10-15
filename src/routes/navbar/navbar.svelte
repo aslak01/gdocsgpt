@@ -18,17 +18,22 @@
 
 <nav>
   <div class="iconwrapper">
-    <Contract />
+    <a href="/">
+      <Contract />
+    </a>
   </div>
   <ul>
     <NavbarButton title="File">
       <NestedNavbar>
+        <NestedNavbarButton>Login</NestedNavbarButton>
         <NestedNavbarButton>New</NestedNavbarButton>
         <NestedNavbarButton
           >Open
           <CaretRight size={20} />
         </NestedNavbarButton>
         <NestedNavbarButton>API Key</NestedNavbarButton>
+        <NestedNavbarButton>Model</NestedNavbarButton>
+        <NestedNavbarButton>Close</NestedNavbarButton>
       </NestedNavbar>
     </NavbarButton>
     {#each dummyButtons as btn}
@@ -65,5 +70,9 @@
   .iconwrapper :global(svg) {
     height: 100%;
     width: 100%;
+  }
+  .iconwrapper a {
+    display: contents;
+    color: black;
   }
 </style>

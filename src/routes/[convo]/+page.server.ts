@@ -2,6 +2,19 @@ import { type Cookies, fail } from "@sveltejs/kit";
 import * as db from "$lib/server/database.js";
 import { queryAi } from "$lib/utils/queryAi";
 import { logError } from "$lib/utils/utils";
+import type { PageServerLoad } from "../$types";
+
+export function load(
+  { cookies, params }: { cookies: Cookies; params: PageServerLoad["params"] },
+) {
+  const userid = cookies.get("userid");
+  if (!userid) return;
+  const convoid = params.convo;
+
+  const conversation = db.getConversation(userid, convoid);
+
+  return conversation;
+}
 
 export const actions = {
   default: async (

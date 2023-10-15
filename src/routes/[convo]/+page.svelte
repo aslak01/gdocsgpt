@@ -4,6 +4,7 @@
   // import type { PageData, ActionData } from "./$types";
   export let form;
   export let data;
+  $: console.log(data);
   let requesting = false;
   let submitBtn: HTMLButtonElement;
   let formEl: HTMLFormElement;
