@@ -30,6 +30,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource-variable/jost": "^5.0.14",
+		"@svelte-put/clickoutside": "^3.0.0",
 		"carbon-icons-svelte": "^12.3.0",
 		"carbon-pictograms-svelte": "^12.8.0",
 		"carbon-preprocess-svelte": "^0.10.0",

@@ -1,12 +1,21 @@
 <script lang="ts">
+  import { clickoutside } from "@svelte-put/clickoutside";
   export let title: string;
   let active = false;
   function toggleActive() {
     active = !active;
   }
+  function close() {
+    active = false;
+  }
 </script>
 
-<li class="submenu-wrapper" class:active>
+<li
+  class="submenu-wrapper"
+  class:active
+  use:clickoutside
+  on:clickoutside={close}
+>
   <button on:click={toggleActive}>{title}</button>
   <slot />
 </li>

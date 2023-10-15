@@ -1,41 +1,67 @@
+import type { Answer, Conversation } from "$lib/types";
 const db = new Map();
 
-type Answer = {
-  query: string;
-  answer: string;
-  id: string;
-};
-
-export function getAnswers(userid: string) {
-  if (!db.get(userid)) {
-    db.set(userid, [{
-      id: crypto.randomUUID(),
-      query: "Test",
-      answer: "Not a real answer",
-    }]);
+export function getUser(userid: string) {
+  const user = db.get(userid);
+  if (!user) {
+    createUser(userid);
   }
-
   return db.get(userid);
 }
 
-export function createAnswer(userid: string, answer: Omit<Answer, "id">) {
+export function createUser(userid: string) {
+  db.set(userid, []);
+}
+
+export function getConversations(userid: string) {
+  const user = db.get(userid);
+  if (!user) {
+    return;
+  }
+  return db.get(userid);
+}
+
+export function getConversation(userid: string, conversationid: string) {
+  const user = db.get(userid);
+  if (!user) {
+    return;
+  }
+  const conversation = user.findIndex((conversation: Conversation) =>
+    conversation.id === conversationid
+  );
+  return conversation;
+}
+
+export function createConversation(userid: string) {
+  const user = db.get(userid);
+  if (!user) return;
+  const emptyConversation = { id: crypto.randomUUID(), answers: [] };
+  const conversations = user.push(emptyConversation);
+  return conversations;
+}
+
+export function createAnswer(
+  userid: string,
+  conversationid: string,
+  answer: Omit<Answer, "id">,
+) {
   if (answer.query === "") {
     throw new Error("query must exist");
   }
-
-  const answers = db.get(userid);
-
-  answers.push({
+  const user = db.get(userid);
+  const conversation = user.getConversation(conversationid);
+  conversation.answers.push({
     ...answer,
     id: crypto.randomUUID(),
   });
 }
 
-export function deleteAnswer(userid: string, answerid: string) {
-  const answers = db.get(userid);
-  const index = answers.findIndex((answer: Answer) => answer.id === answerid);
-
+export function deleteConversation(userid: string, conversationid: string) {
+  const user = db.get(userid);
+  const index = user.conversations.findIndex((conversation: Conversation) =>
+    conversation.id === conversationid
+  );
   if (index !== -1) {
-    answers.splice(index, 1);
+    user.conversations.splice(index, 1);
   }
 }

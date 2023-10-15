@@ -1,6 +1,6 @@
 import { SECRET_OPENAI_KEY } from "$env/static/private";
 
-async function queryAi(query: string) {
+export async function queryAi(query: string) {
   console.log("query", query);
   const content = {
     "model": "gpt-3.5-turbo",
