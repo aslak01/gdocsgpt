@@ -1,40 +1,47 @@
-import { type Cookies, fail } from "@sveltejs/kit";
+import { type Actions, type Cookies, fail } from "@sveltejs/kit";
 import * as db from "$lib/server/database.js";
+import { faker } from "@faker-js/faker";
 import { queryAi } from "$lib/utils/queryAi";
 import { logError } from "$lib/utils/utils";
 import type { PageServerLoad } from "../$types";
 
-export function load(
-  { cookies, params }: { cookies: Cookies; params: PageServerLoad["params"] },
-) {
-  const userid = cookies.get("userid");
-  if (!userid) return;
-  const convoid = params.convo;
+function isStr(str: unknown) {
+  return typeof str !== "undefined" && typeof str === "string";
+}
+const isNotStr = (str: unknown) => !isStr(str);
 
-  const conversation = db.getConversation(userid, convoid);
+export const load: PageServerLoad = (
+  { cookies, params },
+) => {
+  const userid = cookies.get("userid");
+  const convo = params?.convo;
+  if (isNotStr(userid) || isNotStr(convo)) return;
+
+  const conversation = db.getConversation(userid, convo);
 
   return conversation;
-}
+};
 
-export const actions = {
+export const actions: Actions = {
   default: async (
-    { request, cookies }: { request: Request; cookies: Cookies },
+    { request, cookies, params },
   ) => {
-    if (!cookies.get("userid")) return;
-    // await new Promise((fulfil) => setTimeout(fulfil, 1000));
+    const userid = cookies.get("userid");
+    const convoid = params.convo;
+    console.log("userid", userid, "convoid", convoid);
     const data = await request.formData();
-    if (!data.get("description")) return;
-    const query = data.get("description") || "";
-    console.log("entered", query);
-    if (typeof query !== "string") return;
+    const query = data.get("description");
+    console.log("query", query);
+    if (isNotStr(userid) || isNotStr(convoid) || isNotStr(query)) return;
     // const answer = await queryAi(query);
-    const answer = "got an answer";
-    if (typeof answer !== "string") return;
-    console.log(answer);
+    const answer = faker.lorem.paragraphs({ min: 1, max: 5 }, "<br />");
+    if (isNotStr(answer)) return;
+    console.log("answer", answer);
 
     try {
       db.createAnswer(
-        cookies.get("userid") || "",
+        userid,
+        convoid,
         { query, answer },
       );
     } catch (error) {

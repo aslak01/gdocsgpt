@@ -34,12 +34,14 @@
       <textarea name="description" disabled={requesting} />
       <!-- <button type="submit" bind:this={submitBtn}>Hei</button> -->
       <div class="answers">
-        <!-- {#each data.answers as answer (answer.id)} -->
-        <!--   <span>{answer.query}</span> -->
-        <!--   <br /> -->
-        <!--   <span>{answer.answer}</span> -->
-        <!--   <br /> -->
-        <!-- {/each} -->
+        {#if data?.answers?.length}
+          {#each data.answers as answer (answer.id)}
+            <span>{answer.query}</span>
+            <br />
+            <span>{answer.answer}</span>
+            <br />
+          {/each}
+        {/if}
       </div>
     </div>
   </form>
@@ -62,6 +64,9 @@
     width: 100%;
     padding-inline: var(--_margins);
     padding-top: var(--_margins);
+  }
+  textarea[disabled] {
+    color: var(--stone-2);
   }
   .typefield {
     border: 1px solid var(--accent);

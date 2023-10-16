@@ -10,3 +10,12 @@
     {convo.id}</a
   >
 </div>
+
+<style>
+  a {
+    color: var(--text-color);
+  }
+  a:hover {
+    color: var(--red-9);
+  }
+</style>

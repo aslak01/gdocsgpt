@@ -28,8 +28,10 @@
     padding: var(--size-3);
     background: var(--sheet);
     display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fit, min-content);
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-auto-rows: minmax(100px, auto);
+    overflow-y: auto;
+    gap: var(--size-2);
   }
   form {
     display: flex;
@@ -39,9 +41,10 @@
     all: unset;
     box-sizing: border-box;
     display: block;
-    color: green;
+    color: var(--text-color);
   }
   button:hover {
     cursor: pointer;
+    color: var(--green-7);
   }
 </style>

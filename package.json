@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@faker-js/faker": "^8.2.0",
 		"@fontsource-variable/jost": "^5.0.14",
 		"@svelte-put/clickoutside": "^3.0.0",
 		"carbon-icons-svelte": "^12.3.0",

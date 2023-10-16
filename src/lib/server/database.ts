@@ -22,13 +22,16 @@ export function getConversations(userid: string) {
 }
 
 export function getConversation(userid: string, conversationid: string) {
+  console.log("hei fra getConversation");
   const user = db.get(userid);
+  console.log(user);
   if (!user) {
     return;
   }
   const conversation = user.find((conversation: Conversation) =>
     conversation.id === conversationid
   );
+  console.log("getConversation", conversation);
   return conversation;
 }
 
@@ -45,11 +48,13 @@ export function createAnswer(
   conversationid: string,
   answer: Omit<Answer, "id">,
 ) {
-  if (answer.query === "") {
-    throw new Error("query must exist");
-  }
+  console.log("hei from createanswer");
   const user = db.get(userid);
-  const conversation = user.getConversation(conversationid);
+  console.log("user", user);
+
+  const conversation = getConversation(userid, conversationid);
+  console.log("createAnswer", user, conversation);
+
   conversation.answers.push({
     ...answer,
     id: crypto.randomUUID(),
