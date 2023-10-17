@@ -31,17 +31,17 @@
 <div class="field">
   <form method="POST" use:enhance={onSubmit} bind:this={formEl}>
     <div class="typefield">
-      <textarea name="description" disabled={requesting} />
       <!-- <button type="submit" bind:this={submitBtn}>Hei</button> -->
       <div class="answers">
         {#if data?.answers?.length}
-          {#each data.answers as answer (answer.id)}
-            <span>{answer.query}</span>
-            <br />
-            <span>{answer.answer}</span>
-            <br />
+          {#each data.answers as convo (convo.id)}
+            <p>{@html convo.query}</p>
+            <span>{@html convo.answer}</span>
           {/each}
         {/if}
+      </div>
+      <div class="textarea-wrapper">
+        <textarea name="description" disabled={requesting} />
       </div>
     </div>
   </form>
@@ -50,6 +50,7 @@
 <style>
   .field {
     --_margins: var(--size-9);
+    --_half-margin: var(--size-5);
     background: var(--lightgray);
     height: 100%;
     overflow-x: auto;
@@ -58,17 +59,27 @@
     display: flex;
     justify-content: center;
   }
+  .textarea-wrapper {
+    display: flex;
+    flex: 1;
+  }
   textarea {
     all: unset;
     box-sizing: border-box;
     width: 100%;
+    flex: 1;
     padding-inline: var(--_margins);
-    padding-top: var(--_margins);
+    height: 100%;
+  }
+  p:not(:first-of-type) {
+    padding-top: var(--_half-margin);
+    padding-bottom: var(--size-2);
   }
   textarea[disabled] {
     color: var(--stone-2);
   }
   .typefield {
+    padding-top: var(--_margins);
     border: 1px solid var(--accent);
     border-radius: var(--radius-1);
     background: var(--sheet);
@@ -78,5 +89,6 @@
   }
   .answers {
     padding-inline: var(--_margins);
+    padding-bottom: var(--_half-margin);
   }
 </style>

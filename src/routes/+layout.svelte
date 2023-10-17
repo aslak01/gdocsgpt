@@ -24,8 +24,11 @@
     --accent: var(--stone-6);
     --text-color: var(--gray-11);
     --_nav-height: var(--size-8);
+    --font-size: var(--font-size-2);
     background: var(--background);
     min-height: 100dvh;
     color: var(--text-color);
+    font-size: var(--font-size);
+    /* line-height: 1.4; */
   }
 </style>
