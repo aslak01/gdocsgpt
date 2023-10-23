@@ -62,6 +62,9 @@
   .textarea-wrapper {
     display: flex;
     flex: 1;
+    height: stretch;
+    height: -webkit-fill-available;
+    border: 1px solid red;
   }
   textarea {
     all: unset;
