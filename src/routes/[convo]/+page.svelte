@@ -1,6 +1,9 @@
 <script lang="ts">
-  import { enhance } from "$app/forms";
-  import type { SubmitFunction } from "@sveltejs/kit";
+  import { invalidateAll } from "$app/navigation";
+  import { applyAction, deserialize } from "$app/forms";
+  import type { ActionResult, SubmitFunction } from "@sveltejs/kit";
+  import Answer from "./Answer.svelte";
+  import { tick } from "svelte";
   // import type { PageData, ActionData } from "./$types";
   export let form;
   export let data;
@@ -8,6 +11,7 @@
   let requesting = false;
   let submitBtn: HTMLButtonElement;
   let formEl: HTMLFormElement;
+  let textAr: HTMLTextAreaElement;
 
   function keydown(event: KeyboardEvent) {
     if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
@@ -17,6 +21,7 @@
   }
 
   const onSubmit: SubmitFunction = () => {
+    console.log("submitted");
     requesting = true;
 
     return async ({ update }) => {
@@ -24,27 +29,55 @@
       await update();
     };
   };
+
+  /** @param {{ currentTarget: EventTarget & HTMLFormElement}} event */
+  async function handleSubmit(event: SubmitEvent) {
+    const { currentTarget } = event;
+    if (currentTarget === null) return;
+    const target = currentTarget as EventTarget & HTMLFormElement;
+    const data = new FormData(target);
+
+    const response = await fetch(target.action, {
+      method: "POST",
+      body: data,
+    });
+
+    const result: ActionResult = deserialize(await response.text());
+
+    if (result.type === "success") {
+      await invalidateAll();
+      textAr.value = "";
+    }
+
+    applyAction(result);
+    await tick();
+    textAr && textAr.focus();
+  }
 </script>
 
 <svelte:window on:keydown={keydown} />
 
 <div class="field">
-  <form method="POST" use:enhance={onSubmit} bind:this={formEl}>
-    <div class="typefield">
-      <!-- <button type="submit" bind:this={submitBtn}>Hei</button> -->
+  <div class="page">
+    <!-- <button type="submit" bind:this={submitBtn}>Hei</button> -->
+    {#if data?.answers?.length}
       <div class="answers">
-        {#if data?.answers?.length}
-          {#each data.answers as convo (convo.id)}
-            <p>{@html convo.query}</p>
-            <span>{@html convo.answer}</span>
-          {/each}
-        {/if}
+        {#each data.answers as convo (convo.id)}
+          <p>{@html convo.query}</p>
+          <Answer source={convo.answer} />
+        {/each}
       </div>
-      <div class="textarea-wrapper">
-        <textarea name="description" disabled={requesting} />
-      </div>
+    {/if}
+    <div class="textarea-wrapper">
+      <form
+        method="POST"
+        on:submit|preventDefault={handleSubmit}
+        bind:this={formEl}
+      >
+        <textarea name="userquery" disabled={requesting} bind:this={textAr} />
+      </form>
     </div>
-  </form>
+  </div>
 </div>
 
 <style>
@@ -52,27 +85,30 @@
     --_margins: var(--size-9);
     --_half-margin: var(--size-5);
     background: var(--lightgray);
-    height: 100%;
     overflow-x: auto;
-  }
-  form {
     display: flex;
     justify-content: center;
+  }
+  form {
+    width: 100%;
   }
   .textarea-wrapper {
     display: flex;
     flex: 1;
-    height: stretch;
     height: -webkit-fill-available;
-    border: 1px solid red;
+    height: -moz-fill-available;
+    height: fill-available;
+    /* border: 1px solid red; */
   }
   textarea {
     all: unset;
     box-sizing: border-box;
-    width: 100%;
-    flex: 1;
     padding-inline: var(--_margins);
     height: 100%;
+    width: 100%;
+    min-height: 100%;
+    border: 1px solid green;
+    /* background: transparent; */
   }
   p:not(:first-of-type) {
     padding-top: var(--_half-margin);
@@ -81,7 +117,7 @@
   textarea[disabled] {
     color: var(--stone-2);
   }
-  .typefield {
+  .page {
     padding-top: var(--_margins);
     border: 1px solid var(--accent);
     border-radius: var(--radius-1);

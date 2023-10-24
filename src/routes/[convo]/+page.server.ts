@@ -1,9 +1,9 @@
-import { type Actions, type Cookies, fail } from "@sveltejs/kit";
+import { type Actions, fail } from "@sveltejs/kit";
+import type { PageServerLoad } from "../$types";
 import * as db from "$lib/server/database.js";
 import { faker } from "@faker-js/faker";
 import { queryAi } from "$lib/utils/queryAi";
 import { logError } from "$lib/utils/utils";
-import type { PageServerLoad } from "../$types";
 
 function isStr(str: unknown) {
   return typeof str !== "undefined" && typeof str === "string";
@@ -30,7 +30,7 @@ export const actions: Actions = {
     const convoid = params.convo;
     console.log("userid", userid, "convoid", convoid);
     const data = await request.formData();
-    const query = data.get("description");
+    const query = data.get("userquery");
     console.log("query", query);
     if (isNotStr(userid) || isNotStr(convoid) || isNotStr(query)) return;
     // const answer = await queryAi(query);
