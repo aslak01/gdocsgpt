@@ -54,6 +54,8 @@
     height: var(--_nav-height);
     --_menu-font-size: var(--font-size-0);
     border-bottom: 1px solid var(--accent);
+    position: sticky;
+    top: 0;
   }
 
   ul {

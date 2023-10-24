@@ -63,8 +63,10 @@
     {#if data?.answers?.length}
       <div class="answers">
         {#each data.answers as convo (convo.id)}
+          {@const q = convo.query}
+          {@const source = convo.answer}
           <p>{@html convo.query}</p>
-          <Answer source={convo.answer} />
+          <Answer {q} {source} />
         {/each}
       </div>
     {/if}
@@ -107,7 +109,7 @@
     height: 100%;
     width: 100%;
     min-height: 100%;
-    border: 1px solid green;
+    /* border: 1px solid green; */
     /* background: transparent; */
   }
   p:not(:first-of-type) {
