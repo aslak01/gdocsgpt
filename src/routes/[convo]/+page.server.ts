@@ -33,8 +33,8 @@ export const actions: Actions = {
     const query = data.get("userquery");
     console.log("query", query);
     if (isNotStr(userid) || isNotStr(convoid) || isNotStr(query)) return;
-    // const answer = await queryAi(query);
-    const answer = faker.lorem.paragraphs({ min: 1, max: 5 }, "<br />");
+    const answer = await queryAi(query);
+    // const answer = faker.lorem.paragraphs({ min: 1, max: 5 }, "<br />");
     if (isNotStr(answer)) return;
     console.log("answer", answer);
 

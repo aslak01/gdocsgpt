@@ -1,15 +1,14 @@
 <script lang="ts">
   import { invalidateAll } from "$app/navigation";
   import { applyAction, deserialize } from "$app/forms";
-  import type { ActionResult, SubmitFunction } from "@sveltejs/kit";
+  import type { ActionResult } from "@sveltejs/kit";
   import Answer from "./Answer.svelte";
   import { tick } from "svelte";
   // import type { PageData, ActionData } from "./$types";
-  export let form;
+  // export let form;
   export let data;
   $: console.log(data);
   let requesting = false;
-  let submitBtn: HTMLButtonElement;
   let formEl: HTMLFormElement;
   let textAr: HTMLTextAreaElement;
 
@@ -20,15 +19,15 @@
     }
   }
 
-  const onSubmit: SubmitFunction = () => {
-    console.log("submitted");
-    requesting = true;
-
-    return async ({ update }) => {
-      requesting = false;
-      await update();
-    };
-  };
+  // const onSubmit: SubmitFunction = () => {
+  //   console.log("submitted");
+  //   requesting = true;
+  //
+  //   return async ({ update }) => {
+  //     requesting = false;
+  //     await update();
+  //   };
+  // };
 
   /** @param {{ currentTarget: EventTarget & HTMLFormElement}} event */
   async function handleSubmit(event: SubmitEvent) {
