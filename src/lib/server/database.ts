@@ -1,4 +1,6 @@
 import type { Answer, Conversation } from "$lib/types";
+import { sql } from "@vercel/postgres";
+import { seed } from "./seed";
 const db = new Map();
 
 export function getUser(userid: string) {
