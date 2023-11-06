@@ -8,10 +8,12 @@ import {
   SECRET_USER2_PASS,
 } from "$env/static/private";
 
-import { sql } from "@vercel/postgres";
+import { db } from "@vercel/postgres";
 
 export async function seed() {
-  const userTable = await sql`CREATE TABLE IF NOT EXISTS users (
+  const dbclient = await db.connect();
+
+  const userTable = await dbclient.sql`CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v5(),
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -23,7 +25,7 @@ export async function seed() {
 
   console.log(`Created "users" table`);
 
-  const conversations = await sql`CREATE TABLE conversations (
+  const conversations = await dbclient.sql`CREATE TABLE conversations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v5(),
     name VARCHAR(255),
     user_id UUID NOT NULL,
@@ -33,7 +35,7 @@ export async function seed() {
 
   console.log(`Created "conversations" table`);
 
-  const messages = await sql`CREATE TABLE messages (
+  const messages = await dbclient.sql`CREATE TABLE messages (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v5(),
     conversation_id UUID NOT NULL,
     message VARCHAR(255),
@@ -45,12 +47,12 @@ export async function seed() {
   console.log(`Created "messages" table`);
 
   const users = await Promise.all([
-    sql`
+    dbclient.sql`
     INSERT INTO users (name, email, image)
     VALUES (${SECRET_USER1_NAME}, ${SECRET_USER1_EMAIL}, ${SECRET_USER1_PASS}, ${SECRET_OPENAI_KEY})
     ON CONFLICT (email) DO NOTHING;
   `,
-    sql`
+    dbclient.sql`
     INSERT INTO users (name, email, image)
     VALUES (${SECRET_USER2_NAME}, ${SECRET_USER2_EMAIL}, ${SECRET_USER2_PASS}, ${SECRET_OPENAI_KEY})
     ON CONFLICT (email) DO NOTHING;

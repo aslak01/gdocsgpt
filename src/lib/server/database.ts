@@ -1,7 +1,14 @@
 import type { Answer, Conversation } from "$lib/types";
-import { sql } from "@vercel/postgres";
+// import { db as pdb } from "@vercel/postgres";
 import { seed } from "./seed";
+
+// const client = await pdb.connect();
 const db = new Map();
+
+// async function hasUsers() {
+//   const users = await client.sql`SELECT * FROM users;`;
+//   return !!users.rows.length;
+// }
 
 export function getUser(userid: string) {
   const user = db.get(userid);

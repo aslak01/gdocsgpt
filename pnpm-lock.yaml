@@ -11,6 +11,9 @@ dependencies:
   '@fontsource-variable/jost':
     specifier: ^5.0.14
     version: 5.0.14
+  '@lucia-auth/adapter-postgresql':
+    specifier: ^2.0.2
+    version: 2.0.2(lucia@2.7.3)
   '@melt-ui/pp':
     specifier: ^0.1.2
     version: 0.1.2(@melt-ui/svelte@0.55.4)(svelte@4.2.1)
@@ -32,6 +35,9 @@ dependencies:
   carbon-preprocess-svelte:
     specifier: ^0.10.0
     version: 0.10.0(postcss@8.4.31)(svelte@4.2.1)
+  lucia:
+    specifier: ^2.7.3
+    version: 2.7.3
   svelte-markdown:
     specifier: ^0.4.0
     version: 0.4.0(svelte@4.2.1)
@@ -762,6 +768,21 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  /@lucia-auth/adapter-postgresql@2.0.2(lucia@2.7.3):
+    resolution: {integrity: sha512-gQ7SlFu+gxQj2IX2J8ZVivcLBbdnf9SbNQOVWkJxZOdY1uaaIQGeNfEDld2Awy02VrXmA4sjHsbkJx1JPVw2+A==}
+    peerDependencies:
+      lucia: ^2.0.0
+      pg: ^8.8.0
+      postgres: ^3.3.0
+    peerDependenciesMeta:
+      pg:
+        optional: true
+      postgres:
+        optional: true
+    dependencies:
+      lucia: 2.7.3
+    dev: false
+
   /@melt-ui/pp@0.1.2(@melt-ui/svelte@0.55.4)(svelte@4.2.1):
     resolution: {integrity: sha512-GZeqp7UWLNZUC2dJpREnZrWMR88vy27WO7C3cIBz4KW3/CFD19FjNkd3VbSRfcRryrMkdnEs9nu2VUa8/0u58w==}
     engines: {pnpm: '>=8.6.3'}
@@ -790,6 +811,11 @@ packages:
     resolution: {integrity: sha512-qXxBRYN0m2v8kVQBfMxbzNGn2xFAhTXFibzQlE++NfJ56Shz3m7+MyBBtXDlEH+3Wfa6lToDXf1MElocY4sJ3w==}
     dependencies:
       '@types/pg': 8.6.6
+    dev: false
+
+  /@noble/hashes@1.3.2:
+    resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
+    engines: {node: '>= 16'}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
@@ -1446,6 +1472,13 @@ packages:
   /locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
 
+  /lucia@2.7.3:
+    resolution: {integrity: sha512-fzwwsZcijdQmS116J2odQZj/fb8SYXUI2rRWz84gZqkbpX9QAS4m72qlFzsPDv1YXJHNRhYUQCvQl3EKgt3OgA==}
+    dependencies:
+      '@noble/hashes': 1.3.2
+      nanoid: 5.0.1
+    dev: false
+
   /magic-string@0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
     engines: {node: '>=12'}
@@ -1526,6 +1559,12 @@ packages:
   /nanoid@4.0.2:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
+
+  /nanoid@5.0.1:
+    resolution: {integrity: sha512-vWeVtV5Cw68aML/QaZvqN/3QQXc6fBfIieAlu05m7FZW2Dgb+3f0xc0TTxuJW+7u30t7iSDTV/j3kVI0oJqIfQ==}
+    engines: {node: ^18 || >=20}
     hasBin: true
     dev: false
 
