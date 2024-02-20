@@ -1,5 +1,5 @@
-<script lang="ts">
-  import "@fontsource-variable/jost";
+<script>
+  import "./styles.css";
   import Navbar from "./navbar/navbar.svelte";
 </script>
 
@@ -9,13 +9,6 @@
 </main>
 
 <style>
-  @import "open-props/postcss/style";
-  @import "open-props/postcss/normalize";
-  :global(body) {
-    margin: 0;
-    background: var(--white);
-    font-family: "Jost", sans-serif;
-  }
   main {
     --gray: #333;
     --black: #111;

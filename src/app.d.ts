@@ -1,22 +1,13 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
-/// <reference types="lucia" />
+// Lucia boilerplate below
 declare global {
   namespace App {
-    // interface Error {}
     interface Locals {
-      auth: import("lucia").AuthRequest;
+      user: import("lucia").User | null;
+      session: import("lucia").Session | null;
     }
-    // interface PageData {}
-    // interface Platform {}
-  }
-  namespace Lucia {
-    type Auth = import("$lib/server/lucia").Auth;
-    type DatabaseUserAttributes = {
-      name: string;
-    };
-    type DatabaseSessionAttributes = {};
   }
 }
 
-export {};
+export { };

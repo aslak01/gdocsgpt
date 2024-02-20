@@ -1,0 +1,8 @@
+@import "open-props/postcss/normalize";
+@import "@fontsource-variable/jost";
+
+body {
+  margin: 0;
+  background: var(--white);
+  font-family: "Jost", sans-serif;
+}
