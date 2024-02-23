@@ -41,6 +41,7 @@
 		"carbon-pictograms-svelte": "^12.10.0",
 		"carbon-preprocess-svelte": "^0.10.0",
 		"lucia": "^3.0.1",
+		"oslo": "^1.1.2",
 		"svelte-markdown": "^0.4.1",
 		"svelte-sequential-preprocessor": "^2.0.1",
 		"zod-form-data": "^2.0.2"

@@ -1,9 +1,7 @@
 import {
   SECRET_OPENAI_KEY,
-  SECRET_USER1_EMAIL,
   SECRET_USER1_NAME,
   SECRET_USER1_PASS,
-  SECRET_USER2_EMAIL,
   SECRET_USER2_NAME,
   SECRET_USER2_PASS,
 } from "$env/static/private";
@@ -16,10 +14,8 @@ export async function seed() {
   const userTable = await dbclient.sql`CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v5(),
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     key VARCHAR(255) NOT NULL,
-    "systemPrompt" VARCHAR(255),
     "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
   );`;
 
@@ -48,14 +44,12 @@ export async function seed() {
 
   const users = await Promise.all([
     dbclient.sql`
-    INSERT INTO users (name, email, image)
-    VALUES (${SECRET_USER1_NAME}, ${SECRET_USER1_EMAIL}, ${SECRET_USER1_PASS}, ${SECRET_OPENAI_KEY})
-    ON CONFLICT (email) DO NOTHING;
+    INSERT INTO users (name, password, key)
+    VALUES (${SECRET_USER1_NAME}, ${SECRET_USER1_PASS}, ${SECRET_OPENAI_KEY})
   `,
     dbclient.sql`
-    INSERT INTO users (name, email, image)
-    VALUES (${SECRET_USER2_NAME}, ${SECRET_USER2_EMAIL}, ${SECRET_USER2_PASS}, ${SECRET_OPENAI_KEY})
-    ON CONFLICT (email) DO NOTHING;
+    INSERT INTO users (name, password, key)
+    VALUES (${SECRET_USER2_NAME}, ${SECRET_USER2_PASS}, ${SECRET_OPENAI_KEY})
   `,
   ]);
 

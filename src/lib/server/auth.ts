@@ -5,6 +5,7 @@ import { dev } from "$app/environment";
 import { PostgresJsAdapter } from "@lucia-auth/adapter-postgresql";
 
 import { db } from "@vercel/postgres";
+import type { DatabaseUser } from "./database";
 
 const adapter = new PostgresJsAdapter(db, {
   user: "auth_user",
@@ -18,10 +19,16 @@ export const lucia = new Lucia(adapter, {
       secure: !dev,
     },
   },
+  getUserAttributes: (attributes) => {
+    return {
+      username: attributes.username,
+    };
+  },
 });
 
 declare module "lucia" {
   interface Register {
     Lucia: typeof lucia;
+    DatabaseUserAttributes: Omit<DatabaseUser, "id">;
   }
 }
