@@ -37,6 +37,7 @@
 		"@svelte-put/clickoutside": "^3.0.1",
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"@vercel/postgres": "^0.7.2",
+		"bits-ui": "^0.18.2",
 		"carbon-icons-svelte": "^12.5.0",
 		"carbon-pictograms-svelte": "^12.10.0",
 		"carbon-preprocess-svelte": "^0.10.0",

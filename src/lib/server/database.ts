@@ -1,12 +1,49 @@
 import type { Answer, Conversation } from "$lib/types";
 // import { db as pdb } from "@vercel/postgres";
 import { seed } from "./seed";
+import { extractError } from "$lib/utils/utils";
 
 export type DatabaseUser = {
   id: string;
   username: string;
   password: string;
 };
+
+import { createPool, sql } from "@vercel/postgres";
+import { POSTGRES_URL } from "$env/static/private";
+
+export async function load() {
+  const db = createPool({ connectionString: POSTGRES_URL });
+  const startTime = Date.now();
+
+  try {
+    const { rows: users } = await db.query("SELECT * FROM users");
+    const duration = Date.now() - startTime;
+    return {
+      users: users,
+      duration: duration,
+    };
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === `relation "users" does not exist`
+    ) {
+      console.log(
+        "Table does not exist, creating and seeding it with dummy data now...",
+      );
+      // Table is not created yet
+      await seed();
+      const { rows: users } = await db.query("SELECT * FROM users");
+      const duration = Date.now() - startTime;
+      return {
+        users: users,
+        duration: duration,
+      };
+    } else {
+      throw error;
+    }
+  }
+}
 
 // const client = await pdb.connect();
 export const db = new Map();

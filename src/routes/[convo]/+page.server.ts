@@ -1,9 +1,9 @@
 import { type Actions, fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "../$types";
 import * as db from "$lib/server/database.js";
-import { faker } from "@faker-js/faker";
+// import { faker } from "@faker-js/faker";
 import { queryAi } from "$lib/utils/queryAi";
-import { logError } from "$lib/utils/utils";
+import { extractError } from "$lib/utils/utils";
 
 function isStr(str: unknown) {
   return typeof str !== "undefined" && typeof str === "string";
@@ -47,7 +47,7 @@ export const actions: Actions = {
     } catch (error) {
       return fail(422, {
         description: data.get("request"),
-        error: logError(error),
+        error: extractError(error),
       });
     }
   },
